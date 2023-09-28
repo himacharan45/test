@@ -1,0 +1,31 @@
+WITH 
+cte1 AS (
+  SELECT ROW_NUMBER() OVER (ORDER BY Name) AS ROWNUMBER, Name 
+  FROM Occupations 
+  Where Occupation = 'Doctor'
+), 
+cte2 AS (
+  SELECT ROW_NUMBER() OVER (ORDER BY Name) AS ROWNUMBER, Name 
+  FROM Occupations 
+  Where Occupation = 'Professor'
+), 
+cte3 AS (
+  SELECT ROW_NUMBER() OVER (ORDER BY Name) AS ROWNUMBER, Name 
+  FROM Occupations 
+  Where Occupation = 'Singer'
+), 
+cte4 AS (
+  SELECT ROW_NUMBER() OVER (ORDER BY Name) AS ROWNUMBER, Name 
+  FROM Occupations 
+  Where Occupation = 'Actor'
+) 
+SELECT 
+  cte1.Name AS Doctor, 
+  cte2.Name AS Professor, 
+  cte3.Name AS Singer, 
+  cte4.Name AS Actor 
+FROM 
+  cte2 
+  LEFT JOIN cte1 ON cte2.ROWNUMBER = cte1.ROWNUMBER 
+  LEFT JOIN cte3 ON cte2.ROWNUMBER = cte3.ROWNUMBER 
+  LEFT JOIN cte4 ON cte2.ROWNUMBER = cte4.ROWNUMBER
